@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "genai": "^0.0.18"
+  }
+  
+}
