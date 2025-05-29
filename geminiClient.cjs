@@ -1,14 +1,19 @@
-// geminiClient.cjs
 require('dotenv').config();
 
-const { Client } = require('genai');
+const genai = require('genai');
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const MODEL_NAME = 'gemini-1.5-flash';
-
-const client = new Client({
-  apiKey: GEMINI_API_KEY,
-  model: MODEL_NAME,
-});
+const client = genai.Client
+  ? new genai.Client({
+      apiKey: process.env.GEMINI_API_KEY,
+      model: 'gemini-1.5-flash',
+    })
+  : genai.default
+  ? new genai.default.Client({
+      apiKey: process.env.GEMINI_API_KEY,
+      model: 'gemini-1.5-flash',
+    })
+  : (() => {
+      throw new Error('Could not find Client constructor in genai package');
+    })();
 
 module.exports = client;
